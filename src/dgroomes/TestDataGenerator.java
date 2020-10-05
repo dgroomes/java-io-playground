@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 public class TestDataGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(TestDataGenerator.class);
-    private static final int NUMBER_OF_LINES = 10_000_000;
+    private static final int NUMBER_OF_LINES = 100_000_000;
 
     public File generateLargeFile() {
         var tempDir = new File("tmp");
@@ -29,7 +29,7 @@ public class TestDataGenerator {
         try (var writer = new PrintWriter(file)) {
             for (int i = 0; i < NUMBER_OF_LINES; i++) {
                 var lineNumber = i + 1;
-                writer.println("%08d: this is a line of dummy data".formatted(lineNumber));
+                writer.println("%09d: this is a line of dummy data".formatted(lineNumber));
             }
         } catch (FileNotFoundException e) {
             log.error("Unexpected error when generating large file", e);

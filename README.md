@@ -16,6 +16,10 @@ My goal is to learn more about Java IO. Specifically:
     its inception. I'd like to form my own opinions about that by actually trying it out. Again, this is not new stuff!
 * I want to learn new stuff (Java 11+)
 
+Referenced material:
+
+* The official Java language tutorials  <https://docs.oracle.com/javase/tutorial/essential/io/file.html>
+
 ### Instructions
 
 NOTE: this was developed on macOS.

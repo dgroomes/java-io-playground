@@ -8,9 +8,17 @@ import org.slf4j.LoggerFactory;
  */
 public class Main {
 
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger log;
+
+    static {
+        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "DEBUG");
+        log = LoggerFactory.getLogger(Main.class);
+    }
 
     public static void main(String[] args) throws Exception {
         log.info("Hello world!");
+
+        var dataGenerator = new TestDataGenerator();
+        dataGenerator.generateLargeFile();
     }
 }

@@ -6,6 +6,16 @@ NOT YET IMPLEMENTED
 
 ---
 
+### Learning about Java IO
+
+My goal is to learn more about Java IO. Specifically:
+
+* I'm refreshing some of my existing Java IO knowledge
+* I want to learn stuff that is old but new to me
+  * In particular, I want to learn about Java's "new IO" in the `java.nio` which apparently has been controversial from
+    its inception. I'd like to form my own opinions about that by actually trying it out. Again, this is not new stuff!
+* I want to learn new stuff (Java 11+)
+
 ### Instructions
 
 NOTE: this was developed on macOS.

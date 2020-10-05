@@ -6,6 +6,8 @@ import org.slf4j.impl.SimpleLogger;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.text.NumberFormat;
+import java.util.stream.Stream;
 
 /**
  * See the README.md for more information.
@@ -22,20 +24,30 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
-        generateTestFile();
+//        generateTestFile();
         var file = new File("tmp/large-temp-file.txt");
         log.info("Reading lines from  the large temp file");
-//        int linesRead = readLines_bufferedReader(file);
-        int linesRead = readlines_nio(file);
-        log.info("Read {} lines from the large temp file", linesRead);
+//        long linesRead = readLines_bufferedReader(file);
+//        long linesRead = readlines_nio(file);
+        long linesRead = readlines_java8stream(file);
+        log.info("Read {} lines from the large temp file", NumberFormat.getInstance().format(linesRead));
+    }
+
+    /**
+     * Read from file using Java 8 Streams
+     */
+    private static long readlines_java8stream(File file) throws IOException {
+        try (var stream = Files.lines(file.toPath())) {
+            return stream.count();
+        }
     }
 
     /**
      * Read from file using java.nio (this is like exactly the same as readLines_bufferedReader)
-     *
+     * <p>
      * What does it mean to have unbuffered stream?
      */
-    private static int readlines_nio(File file) throws IOException {
+    private static long readlines_nio(File file) throws IOException {
         try (var unbufferedInputStream = Files.newInputStream(file.toPath());
              var reader = new InputStreamReader(unbufferedInputStream);
              var bufferedReader = new BufferedReader(reader)) {
@@ -52,7 +64,7 @@ public class Main {
     /**
      * Read from file using {@link BufferedReader} and {@link FileReader}
      */
-    private static int readLines_bufferedReader(File file) throws IOException {
+    private static long readLines_bufferedReader(File file) throws IOException {
         try (var reader = new FileReader(file);
              var bufferedReader = new BufferedReader(reader)) {
 

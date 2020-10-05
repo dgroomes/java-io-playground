@@ -19,7 +19,11 @@ public class TestDataGenerator {
     private static final int NUMBER_OF_LINES = 10_000_000;
 
     public File generateLargeFile() {
-        var file = new File("tmp/large-temp-file.txt");
+        var tempDir = new File("tmp");
+        if (tempDir.mkdir()) {
+            log.debug("Created the temp directory");
+        }
+        var file = new File(tempDir,"large-temp-file.txt");
         log.debug("Generating a large file to {}", file.getAbsolutePath());
 
         try (var writer = new PrintWriter(file)) {
@@ -27,7 +31,6 @@ public class TestDataGenerator {
                 var lineNumber = i + 1;
                 writer.println("%08d: this is a line of dummy data".formatted(lineNumber));
             }
-           log.debug("Generated a large file to {}", file.getAbsolutePath());
         } catch (FileNotFoundException e) {
             log.error("Unexpected error when generating large file", e);
             throw new IllegalStateException(e);

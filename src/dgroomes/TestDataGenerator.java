@@ -8,22 +8,24 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 /**
- * Generating test data. In particular, this class generates a large file that we will use to exercise Java IO
- * operations. For example, for a file that is 4GB large we can't afford to read it into memory so we better use
- * buffering. How do we buffer when reading a file using Java's standard libraries. How many *different* ways are there
- * to do this? What's the most idiomatic way to do this?
+ * Generating test data that we will later use to exercise Java IO APIs.
  */
 public class TestDataGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(TestDataGenerator.class);
+    private static final String TEMP_FILE = "large-temp-file.txt";
+    private static final String TEMP_DIR = "tmp";
     private static final int NUMBER_OF_LINES = 100_000_000;
 
+    /**
+     * Generate a large file of test data
+     */
     public File generateLargeFile() {
-        var tempDir = new File("tmp");
+        var tempDir = new File(TEMP_DIR);
         if (tempDir.mkdir()) {
             log.debug("Created the temp directory");
         }
-        var file = new File(tempDir,"large-temp-file.txt");
+        var file = new File(tempDir, TEMP_FILE);
         log.debug("Generating a large file to {}", file.getAbsolutePath());
 
         try (var writer = new PrintWriter(file)) {
@@ -38,4 +40,6 @@ public class TestDataGenerator {
 
         return file;
     }
+
+
 }

@@ -25,5 +25,6 @@ Referenced material:
 NOTE: this was developed on macOS.
 
 1. Use Java 15
-1. Execute `./build.sh` to compile the source code 
+1. Execute `./build.sh` to compile the source code. NOTE: the first time you do this you'll want to uncomment `generateTestData()`
+   so that the test data is generated. You don't want to do this everytime because it's slow and will wear down your disk unnecessarily. 
 1. Execute `./run.sh` to run the program (i.e. the `main` method).

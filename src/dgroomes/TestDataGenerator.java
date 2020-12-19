@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 
 /**
  * Generating test data that we will later use to exercise Java IO APIs.
+ *
+ * TODO: why is this so slow to execute? It takes a few minutes just to generate around 4GB. Because the println flushes
+ *  probably, right?
  */
 public class TestDataGenerator {
 

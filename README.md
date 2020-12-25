@@ -1,12 +1,12 @@
 # java-io-playground
 
-NOT YET IMPLEMENTED
-
 📚 Learning and exploring Java's IO (input/output) standard libraries.
+
+NOTE: this was developed on macOS.
 
 ---
 
-### Learning about Java IO
+## Learning about Java IO
 
 My goal is to learn more about Java IO. Specifically:
 
@@ -16,15 +16,28 @@ My goal is to learn more about Java IO. Specifically:
     its inception. I'd like to form my own opinions about that by actually trying it out. Again, this is not new stuff!
 * I want to learn new stuff (Java 11+)
 
-Referenced material:
+## Standalone sub-projects
 
-* The official Java language tutorials  <https://docs.oracle.com/javase/tutorial/essential/io/file.html>
+This repository illustrates different concepts, patterns and examples via standalone sub-projects. Each sub-project is
+completely independent of the others and do not depend on the root project. This _standalone sub-project constraint_
+forces the sub-projects to be complete and maximizes the reader's chances of successfully running, understanding, and
+re-using the code.
 
-### Instructions
+The sub-projects include:
 
-NOTE: this was developed on macOS.
+### `read-file/`
 
-1. Use Java 15
-1. Execute `./build.sh` to compile the source code. NOTE: the first time you do this you'll want to uncomment `generateTestData()`
-   so that the test data is generated. You don't want to do this everytime because it's slow and will wear down your disk unnecessarily. 
-1. Execute `./run.sh` to run the program (i.e. the `main` method).
+A simple program that illustrates a few different ways to read from a file using the standard Java libraries.
+
+See [read-file/README.md](read-file/README.md).
+
+### `write-file/`
+
+A simple program that generates a large file.
+
+See [write-file/README.md](write-file/README.md).
+
+## Referenced material
+
+* The [official Java language tutorials](https://docs.oracle.com/javase/tutorial/essential/io/file.html)
+

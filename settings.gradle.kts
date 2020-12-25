@@ -23,5 +23,5 @@ rootProject.name = "java-io-playground"
 // clones this repo and opens it in Intellij, all the sub-projects are automatically identified by Intellij and indexed.
 // You get code completion and project navigation out-of-the-box. Pretty slick!
 includeBuild("read-file")
-//includeBuild("write-file")
+includeBuild("write-file")
 //includeBuild("temp-files")

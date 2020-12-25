@@ -8,22 +8,24 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 /**
- * Generating test data that we will later use to exercise Java IO APIs.
- *
+ * See the README.md for more information.
+ * <p>
  * TODO: why is this so slow to execute? It takes a few minutes just to generate around 4GB. Because the println flushes
- *  probably, right?
+ * probably, right?
  */
-public class TestDataGenerator {
+public class FileWriterMain {
 
-    private static final Logger log = LoggerFactory.getLogger(TestDataGenerator.class);
+    private static final Logger log = LoggerFactory.getLogger(FileWriterMain.class);
     private static final String TEMP_FILE = "large-temp-file.txt";
     private static final String TEMP_DIR = "tmp";
     private static final int NUMBER_OF_LINES = 100_000_000;
 
-    /**
-     * Generate a large file of test data
-     */
-    public File generateLargeFile() {
+    public static void main(String[] args) {
+        var generatedFile = generateLargeFile();
+        log.debug("Generated a large file to {}", generatedFile.getAbsolutePath());
+    }
+
+    private static File generateLargeFile() {
         var tempDir = new File(TEMP_DIR);
         if (tempDir.mkdir()) {
             log.debug("Created the temp directory");
@@ -43,6 +45,4 @@ public class TestDataGenerator {
 
         return file;
     }
-
-
 }

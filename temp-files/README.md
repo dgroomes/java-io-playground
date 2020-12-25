@@ -1,7 +1,5 @@
 # temp-files
 
-NOT YET IMPLEMENTED
-
 A simple program that creates temporary files and directories using the Java standard libraries.
 
 ## Pre-requisites
@@ -13,4 +11,8 @@ A simple program that creates temporary files and directories using the Java sta
 ## Instructions
 
 1. Use Java 8 or higher (Gradle depends on this version of Java or higher)
-1. Execute `./gradlew run` to run the program.
+1. Execute `./gradlew run` to run the program. It will create some temp files and delete them.
+
+### Referenced material
+
+* [The Java Tutorials: *Reading, Writing, and Creating Files*](https://docs.oracle.com/javase/tutorial/essential/io/file.html)

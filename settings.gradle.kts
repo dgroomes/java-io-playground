@@ -24,4 +24,4 @@ rootProject.name = "java-io-playground"
 // You get code completion and project navigation out-of-the-box. Pretty slick!
 includeBuild("read-file")
 includeBuild("write-file")
-//includeBuild("temp-files")
+includeBuild("temp-files")

@@ -37,7 +37,13 @@ A simple program that generates a large file.
 
 See the README in [write-file/](write-file/).
 
+### `temp-files/`
+
+A simple program that creates temporary files and directories using the Java standard libraries.
+
+See the README in [temp-files/](temp-files/).
+
 ## Referenced material
 
 * The [official Java language tutorials](https://docs.oracle.com/javase/tutorial/essential/io/file.html)
-
+* [`gradle-playground` GitHub repo](https://github.com/dgroomes/gradle-playground)

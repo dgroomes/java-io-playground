@@ -1,6 +1,6 @@
 # write-file
 
-A simple program that generates a large file.
+A simple program that generates a large file using the Java standard libraries.
 
 ## Pre-requisites
 

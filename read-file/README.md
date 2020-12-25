@@ -1,6 +1,6 @@
 # read-file
 
-A simple program that illustrates a few different ways to read from a file using the standard Java libraries.
+A simple program that illustrates a few different ways to read from a file using the Java standard libraries.
 
 ## Pre-requisites
 

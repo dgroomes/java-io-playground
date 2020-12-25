@@ -29,13 +29,13 @@ The sub-projects include:
 
 A simple program that illustrates a few different ways to read from a file using the standard Java libraries.
 
-See [read-file/README.md](read-file/README.md).
+See the README in [read-file/](read-file/).
 
 ### `write-file/`
 
 A simple program that generates a large file.
 
-See [write-file/README.md](write-file/README.md).
+See the README in [write-file/](write-file/).
 
 ## Referenced material
 

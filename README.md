@@ -33,7 +33,7 @@ See the README in [read-file/](read-file/).
 
 ### `write-file/`
 
-A simple program that generates a large file using the Java standard libraries.
+A simple program that illustrates a few different ways to write to a file using the Java standard libraries.
 
 See the README in [write-file/](write-file/).
 

@@ -62,7 +62,7 @@ public class FileReaderMain {
     /**
      * Validate the 'read technique' argument and return a ReadTechnique enum value representing it.
      * @param readTechniqueArg the 'read technique' program argument that should be named after a valid read technique
-     * @return a ReadTechnique enum value representing
+     * @return a ReadTechnique enum value representing the argument
      */
     private static ReadTechnique validateReadTechniqueArg(String readTechniqueArg) {
         for (ReadTechnique readTechnique : ReadTechnique.values()) {

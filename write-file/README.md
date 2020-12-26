@@ -13,4 +13,4 @@ A simple program that illustrates a few different ways to write to a file using 
 1. Use Java 8 or higher (Gradle depends on this version of Java or higher)
 1. Execute `./gradlew run --args append` to run the program. Alternatively, try the other options:
    * `./gradlew run --args truncate`.
-   * `./gradlew run --args large`. It will generate a large file to `tmp/large-temp-file.txt`.
+   * `./gradlew run --args large`. It will generate a large file to `tmp/large-file.txt`.

@@ -18,8 +18,8 @@ import java.util.List;
 public class FileWriterMain {
 
     private static final Logger log = LoggerFactory.getLogger(FileWriterMain.class);
-    private static final String TEMP_LARGE_FILE = "large-temp-file.txt";
-    private static final String TEMP_FILE = "temp-file.txt";
+    private static final String TEMP_LARGE_FILE = "large-file.txt";
+    private static final String TEMP_FILE = "file.txt";
     private static final String TEMP_DIR = "tmp";
     private static final int NUMBER_OF_LINES = 100_000_000;
     private static File tempDir;
@@ -59,14 +59,33 @@ public class FileWriterMain {
     }
 
     /**
+     * Create a file "fresh" (i.e. delete it if it already existed)
+     * @param file the file to create
+     */
+    private static void createFileFresh(File file) throws IOException {
+        if (file.exists()) {
+            var deleted = file.delete();
+            if (!deleted) {
+                throw new IllegalStateException("Failed to delete the file %s".formatted(file));
+            }
+        }
+        var created = file.createNewFile();
+        if (!created) {
+            throw new IllegalStateException("Failed to create the file %s".formatted(file));
+        }
+    }
+
+    /**
      * Generate a large file.
      *
      * Why is this so slow to execute? It takes a few minutes just to generate around 4GB. Because the println flushes
      * probably, right?
      */
-    private static void generateLargeFile() {
+    private static void generateLargeFile() throws IOException {
         var file = new File(tempDir, TEMP_LARGE_FILE);
-        log.debug("Generating a large file to {}", file.getAbsolutePath());
+        createFileFresh(file);
+        var filePath = file.getAbsolutePath();
+        log.debug("Generating a large file to {}", filePath);
 
         try (var writer = new PrintWriter(file)) {
             for (int i = 0; i < NUMBER_OF_LINES; i++) {
@@ -78,7 +97,7 @@ public class FileWriterMain {
             throw new IllegalStateException(e);
         }
 
-        log.debug("Generated a large file to {}", file.getAbsolutePath());
+        log.debug("Generated a large file to {}", filePath);
     }
 
     /**
@@ -87,13 +106,9 @@ public class FileWriterMain {
      */
     private static void writeToFile(OpenOption openOption) throws IOException {
         var file = new File(tempDir, TEMP_FILE);
+        createFileFresh(file);
         var filePath = file.toPath();
 
-        // Clean up the file if it already exists.
-        if (file.exists()) {
-            file.delete();
-        }
-        file.createNewFile();
 
         // Write the content
         var messages = List.of("Hello,\n", "world", "!\n");
@@ -102,7 +117,7 @@ public class FileWriterMain {
         }
 
         // Read the content
-        String foundContent = Files.readString(filePath);
+        var foundContent = Files.readString(filePath);
         log.info("All messages were written to the file. The files contents:\n{}", foundContent);
     }
 

@@ -11,7 +11,7 @@ A simple program that illustrates a few different ways to read from a file using
 ## Instructions
 
 1. Use Java 8 or higher (Gradle depends on this version of Java or higher)
-1. Execute `./gradlew run --args "README.md BUFFERED"` to run the program. It will read the `README.md` file.
+1. Execute `./gradlew run --args "README.md buffered"` to run the program. It will read the `README.md` file.
     1. Suggestion: instead of `README.md`, try a larger file. You can use the `write-file` sub-project to generate a
        large file.
-    1. Try different read techniques besides `BUFFERED`. See the enum `ReadTechnique.java` for more information.
+    1. Try different read techniques besides `buffered`. See the enum `ReadTechnique.java` for more information.

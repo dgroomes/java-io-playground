@@ -6,6 +6,7 @@ package dgroomes;
 public enum WriteOption {
 
     LARGE,
+    LARGE_FAST,
     TRUNCATE,
     APPEND
 }

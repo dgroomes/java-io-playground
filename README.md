@@ -46,6 +46,12 @@ A simple program that creates temporary files and directories using the Java sta
 
 See the README in [temp-files/](temp-files/).
 
+### `sockets/`
+
+A simple "write and listen" program using sockets.
+
+See the README in [sockets/](sockets/).
+
 ## Referenced material
 
 * The [official Java language tutorials](https://docs.oracle.com/javase/tutorial/essential/io/file.html)

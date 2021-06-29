@@ -21,5 +21,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("dgroomes.PortMain")
+    mainClass.set("dgroomes.SocketsMain")
 }

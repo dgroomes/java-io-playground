@@ -25,4 +25,4 @@ rootProject.name = "java-io-playground"
 includeBuild("read-file")
 includeBuild("write-file")
 includeBuild("temp-files")
-includeBuild("port")
+includeBuild("sockets")

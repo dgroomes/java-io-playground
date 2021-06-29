@@ -2,7 +2,10 @@
 
 📚 Learning and exploring Java's IO (input/output) standard libraries.
 
-NOTE: this was developed on macOS.
+---
+**NOTE**:
+
+This was developed on macOS and for my own personal use.
 
 ---
 

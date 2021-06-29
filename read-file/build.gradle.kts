@@ -6,13 +6,12 @@ plugins {
 val slf4jVersion = "1.7.30" // releases: http://www.slf4j.org/news.html
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(15))
+        languageVersion.set(JavaLanguageVersion.of(16))
     }
 }
 

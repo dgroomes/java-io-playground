@@ -4,7 +4,7 @@ A simple program that creates temporary files and directories using the Java sta
 
 ## Pre-requisites
 
-* Java 15 must be installed
+* Java 16 must be installed
   * The program depends on this version. It is specified in the `build.gradle.kts` file using the `java` configuration
     block which implements Gradle's [Toolchains for JVM projects feature](https://docs.gradle.org/current/userguide/toolchains.html). 
 

@@ -34,7 +34,7 @@ public class FileWriterMain {
 
         tempDir = new File(TEMP_DIR);
         if (tempDir.mkdir()) {
-            log.debug("Created the temp directory");
+            log.info("Created the temp directory");
         }
 
         switch (option) {
@@ -85,7 +85,7 @@ public class FileWriterMain {
         var file = new File(tempDir, TEMP_LARGE_FILE);
         createFileFresh(file);
         var filePath = file.getAbsolutePath();
-        log.debug("Generating a large file to {}", filePath);
+        log.info("Generating a large file to {}", filePath);
 
         try (var writer = new PrintWriter(file)) {
             for (int i = 0; i < NUMBER_OF_LINES; i++) {
@@ -97,7 +97,7 @@ public class FileWriterMain {
             throw new IllegalStateException(e);
         }
 
-        log.debug("Generated a large file to {}", filePath);
+        log.info("Generated a large file to {}", filePath);
     }
 
     /**

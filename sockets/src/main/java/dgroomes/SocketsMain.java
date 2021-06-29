@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 /**
  * See the README.md for more information.
@@ -21,21 +18,21 @@ public class SocketsMain {
         var port = 8000;
 
         var server = new LoggingServer(port);
-        var clientSocket = new Socket(host, port);
+        var client = new Client(host, port);
+        client.connect();
 
-        try (var stdIn = new BufferedReader(new InputStreamReader(System.in));
-             var socketWriter = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true)) {
+        try (var stdIn = new BufferedReader(new InputStreamReader(System.in))) {
 
             log.info("Write messages to the echo server:");
-
             while (true) {
                 var line = stdIn.readLine();
-                socketWriter.println(line);
+                client.send(line);
             }
         } catch (Exception e) {
             log.error("Something went wrong.", e);
         } finally {
             server.shutdown();
+            client.close();
         }
     }
 }

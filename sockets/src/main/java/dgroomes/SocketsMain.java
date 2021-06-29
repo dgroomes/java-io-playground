@@ -15,10 +15,12 @@ public class SocketsMain {
 
     public static void main(String[] args) throws Exception {
         var host = "127.0.0.1";
-        var port = 8000;
+        var vowelDroppingProxyServerPort = 8000;
+        var loggingServerPort = 8001;
 
-        var server = new LoggingServer(port);
-        var client = new Client(host, port);
+        var loggingServer = new LoggingServer(loggingServerPort);
+        var vowelDroppingProxy = new VowelDroppingProxyServer(vowelDroppingProxyServerPort, host, loggingServerPort);
+        var client = new Client(host, vowelDroppingProxyServerPort);
         client.connect();
 
         try (var stdIn = new BufferedReader(new InputStreamReader(System.in))) {
@@ -31,7 +33,8 @@ public class SocketsMain {
         } catch (Exception e) {
             log.error("Something went wrong.", e);
         } finally {
-            server.shutdown();
+            vowelDroppingProxy.shutdown();
+            loggingServer.shutdown();
             client.close();
         }
     }

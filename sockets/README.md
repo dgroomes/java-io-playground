@@ -1,6 +1,6 @@
 # sockets
 
-A simple "write and listen" program using sockets.
+A simple client and server program using sockets.
 
 ## Pre-requisites
 
@@ -19,14 +19,16 @@ A simple "write and listen" program using sockets.
     * `build/install/sockets/bin/sockets`
 1. Write a message
     * Write a message in the terminal.
-    * You should see that same message logged by the server!
+    * You should see that message logged by the servers!
     * It will look something like this:
-    ![screenshot.png](screenshot.png)
+      ![screenshot.png](screenshot.png)
 
 ### Wish list
 
 General clean ups, TODOs and things I wish to implement for this project:
 
-* Create an intermediate process listener, or "forwarder", between the client and LoggingServer that drops vowels
+* DONE Create an intermediate process listener, or "forwarder", between the client and LoggingServer that drops vowels
 * Periodically fail on the server side. (I'm not sure how to do this; but I want to simulate failure and retries) 
   * DONE First, implement a proper class to abstract the client. This class will later be extended with retry logic.
+* Can the base abstract server use bytes instead of a buffered reader to be more generic?
+* Send data from the server back to the client

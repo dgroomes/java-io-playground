@@ -48,7 +48,7 @@ See the README in [temp-files/](temp-files/).
 
 ### `sockets/`
 
-A simple "write and listen" program using sockets.
+A simple client and server program using sockets.
 
 See the README in [sockets/](sockets/).
 

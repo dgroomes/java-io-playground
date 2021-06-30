@@ -14,6 +14,7 @@ public class Client {
     private final String host;
     private final int port;
     private final AtomicReference<PrintWriter> socketWriter = new AtomicReference<>();
+    private final AtomicReference<BufferedReader> socketReader = new AtomicReference<>();
     private final AtomicReference<Socket> clientSocket = new AtomicReference<>();
 
     public Client(String host, int port) {
@@ -38,6 +39,12 @@ public class Client {
         } catch (IOException e) {
             throw new IllegalStateException(String.format("Failed to get the output stream from the socket at %s:%s", host, port));
         }
+
+        try {
+            socketReader.set(new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));
+        } catch (IOException e) {
+            throw new IllegalStateException(String.format("Failed to get the input stream from the socket at %s:%s", host, port));
+        }
     }
 
     /**
@@ -54,12 +61,32 @@ public class Client {
     }
 
     /**
+     * Receive a response from the server via the socket. This method should be called after "send" with the expectation
+     * that the server is going to send back a response based on the last request sent from the client.
+     */
+    public String receive() {
+        try {
+            return socketReader.get().readLine();
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to find a response from the server", e);
+        }
+    }
+
+    /**
      * My weak attempt at cleanly shutting down components of the program. Call this before program exit.
      */
     public void close() {
         var writer = socketWriter.get();
         if (writer != null) {
             writer.close();
+        }
+        var reader = socketReader.get();
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new IllegalStateException("Failed to close reader");
+            }
         }
         var socket = clientSocket.get();
         if (socket != null) {

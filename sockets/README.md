@@ -31,4 +31,4 @@ General clean ups, TODOs and things I wish to implement for this project:
 * Periodically fail on the server side. (I'm not sure how to do this; but I want to simulate failure and retries) 
   * DONE First, implement a proper class to abstract the client. This class will later be extended with retry logic.
 * Can the base abstract server use bytes instead of a buffered reader to be more generic?
-* Send data from the server back to the client
+* DONE Send data from the server back to the client

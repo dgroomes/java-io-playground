@@ -25,10 +25,11 @@ class VowelDroppingProxyServer extends AbstractServer {
     }
 
     @Override
-    protected void handle(String line) {
+    protected String handle(String line) {
         log.info("Server received: {}", line);
         var noVowels = line.replaceAll("[aeiouyAEIOUY]", "");
         client.send(noVowels);
+        return client.receive();
     }
 
     @Override

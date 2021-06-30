@@ -29,6 +29,8 @@ public class SocketsMain {
             while (true) {
                 var line = stdIn.readLine();
                 client.send(line);
+                var response = client.receive();
+                log.info("Got response: {}", response);
             }
         } catch (Exception e) {
             log.error("Something went wrong.", e);

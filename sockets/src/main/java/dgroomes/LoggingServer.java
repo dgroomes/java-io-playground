@@ -19,8 +19,13 @@ class LoggingServer extends AbstractServer {
         super(port);
     }
 
+    /**
+     * @param line the line of input to handle
+     * @return the number of characters logged
+     */
     @Override
-    protected void handle(String line) {
+    protected String handle(String line) {
         log.info("Server received: {}", line);
+        return String.format("%d characters were logged", line.length());
     }
 }

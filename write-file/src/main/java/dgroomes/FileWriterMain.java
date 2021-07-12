@@ -34,23 +34,11 @@ public class FileWriterMain {
             log.info("Created the temp directory");
         }
 
-        Void _ignoredReturnValueToForceExhaustivenessInSwitch = switch (option) {
-            case LARGE -> {
-                generateLargeFile();
-                yield null;
-            }
-            case APPEND -> {
-                writeToFileAppend();
-                yield null;
-            }
-            case TRUNCATE -> {
-                writeToFileTruncate();
-                yield null;
-            }
-            case SUBSTITUTIONS -> {
-                copyFileWithSubstitutions();
-                yield null;
-            }
+        WriteOption _ignoredReturnValueToForceExhaustivenessInSwitch = switch (option) {
+            case LARGE -> generateLargeFile();
+            case APPEND -> writeToFileAppend();
+            case TRUNCATE -> writeToFileTruncate();
+            case SUBSTITUTIONS -> copyFileWithSubstitutions();
         };
     }
 
@@ -93,7 +81,7 @@ public class FileWriterMain {
      * Why is this so slow to execute? It takes a few minutes just to generate around 4GB. Because the println flushes
      * probably, right?
      */
-    private static void generateLargeFile() throws IOException {
+    private static WriteOption generateLargeFile() throws IOException {
         var file = new File(tempDir, TEMP_LARGE_FILE);
         createFileFresh(file);
         var filePath = file.getAbsolutePath();
@@ -110,6 +98,7 @@ public class FileWriterMain {
         }
 
         log.info("Generated a large file to {}", filePath);
+        return WriteOption.LARGE;
     }
 
     /**
@@ -137,9 +126,10 @@ public class FileWriterMain {
     /**
      * Write to a file and use the 'APPEND' {@link OpenOption}.
      */
-    private static void writeToFileAppend() throws IOException {
+    private static WriteOption writeToFileAppend() throws IOException {
         log.info("Will write to a file using the 'APPEND' OpenOption. The content from all write operations will be in the file");
         writeToFile(StandardOpenOption.APPEND);
+        return WriteOption.APPEND;
     }
 
     /**
@@ -148,9 +138,10 @@ public class FileWriterMain {
      * Note: if we were to omit any options to the the `Files.writeString` method, then it would actually default to
      * using 'TRUNCATE_EXISTING'. So, we are being unnecessarily explicit. See https://github.com/openjdk/jdk/blob/97c99b5d7d4fc057a7ebc378d1e7dd915eaf0bb3/src/java.base/share/classes/java/nio/file/spi/FileSystemProvider.java#L427
      */
-    private static void writeToFileTruncate() throws IOException {
+    private static WriteOption writeToFileTruncate() throws IOException {
         log.info("Will write to a file using the 'TRUNCATE_EXISTING' OpenOption. Only the content of the last write operation will be in the file");
         writeToFile(StandardOpenOption.TRUNCATE_EXISTING);
+        return WriteOption.TRUNCATE;
     }
 
     /**
@@ -159,7 +150,7 @@ public class FileWriterMain {
      * - "Pre-requisites" is replaced with "Requirements"
      * - "program" is replaced with "script"
      */
-    private static void copyFileWithSubstitutions() throws IOException {
+    private static WriteOption copyFileWithSubstitutions() throws IOException {
         var sourceFile = new File("README.md");
         var targetFile = new File(tempDir, "README.md");
         createFileFresh(targetFile);
@@ -179,5 +170,7 @@ public class FileWriterMain {
                 writer.println(lineWithSubs);
             }
         }
+
+        return WriteOption.SUBSTITUTIONS;
     }
 }

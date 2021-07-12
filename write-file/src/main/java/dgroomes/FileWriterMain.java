@@ -3,10 +3,7 @@ package dgroomes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.StandardOpenOption;
@@ -37,15 +34,29 @@ public class FileWriterMain {
             log.info("Created the temp directory");
         }
 
-        switch (option) {
-            case LARGE -> generateLargeFile();
-            case APPEND -> writeToFileAppend();
-            case TRUNCATE -> writeToFileTruncate();
-        }
+        Void _ignoredReturnValueToForceExhaustivenessInSwitch = switch (option) {
+            case LARGE -> {
+                generateLargeFile();
+                yield null;
+            }
+            case APPEND -> {
+                writeToFileAppend();
+                yield null;
+            }
+            case TRUNCATE -> {
+                writeToFileTruncate();
+                yield null;
+            }
+            case SUBSTITUTIONS -> {
+                copyFileWithSubstitutions();
+                yield null;
+            }
+        };
     }
 
     /**
      * Validate the 'write option' argument and return a WriteOption enum value representing it.
+     *
      * @param arg the 'write option' string program argument
      * @return a hydrated WriteOption enum value representing the string argument
      */
@@ -60,6 +71,7 @@ public class FileWriterMain {
 
     /**
      * Create a file "fresh" (i.e. delete it if it already existed)
+     *
      * @param file the file to create
      */
     private static void createFileFresh(File file) throws IOException {
@@ -77,7 +89,7 @@ public class FileWriterMain {
 
     /**
      * Generate a large file.
-     *
+     * <p>
      * Why is this so slow to execute? It takes a few minutes just to generate around 4GB. Because the println flushes
      * probably, right?
      */
@@ -102,6 +114,7 @@ public class FileWriterMain {
 
     /**
      * Write a hardcoded series of messages to a file, one by one. Then print out its contents.
+     *
      * @param openOption the given OpenOption will be used for the OutputStream.
      */
     private static void writeToFile(OpenOption openOption) throws IOException {
@@ -131,12 +144,40 @@ public class FileWriterMain {
 
     /**
      * Write to a file and use the 'TRUNCATE_EXISTING' {@link OpenOption}.
-     *
+     * <p>
      * Note: if we were to omit any options to the the `Files.writeString` method, then it would actually default to
      * using 'TRUNCATE_EXISTING'. So, we are being unnecessarily explicit. See https://github.com/openjdk/jdk/blob/97c99b5d7d4fc057a7ebc378d1e7dd915eaf0bb3/src/java.base/share/classes/java/nio/file/spi/FileSystemProvider.java#L427
      */
     private static void writeToFileTruncate() throws IOException {
         log.info("Will write to a file using the 'TRUNCATE_EXISTING' OpenOption. Only the content of the last write operation will be in the file");
         writeToFile(StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    /**
+     * Copy the content from a "source" file into a "target" file while making some substitutions for some tokens.
+     * Specifically, copy the "README.md" file into a temp directory and make the following substitutions:
+     * - "Pre-requisites" is replaced with "Requirements"
+     * - "program" is replaced with "script"
+     */
+    private static void copyFileWithSubstitutions() throws IOException {
+        var sourceFile = new File("README.md");
+        var targetFile = new File(tempDir, "README.md");
+        createFileFresh(targetFile);
+        log.info("Copying file '{}' to '{}' and making substitutions", sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
+
+
+        try (var reader = new BufferedReader(new FileReader(sourceFile));
+             var writer = new PrintWriter(targetFile)) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+
+                var lineWithSubs = line
+                        .replaceAll("Pre-requisites", "Requirements")
+                        .replaceAll("program", "script");
+
+                writer.println(lineWithSubs);
+            }
+        }
     }
 }

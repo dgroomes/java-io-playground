@@ -7,5 +7,6 @@ public enum WriteOption {
 
     LARGE,
     TRUNCATE,
-    APPEND
+    APPEND,
+    SUBSTITUTIONS
 }

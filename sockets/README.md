@@ -17,7 +17,7 @@ Follow these instructions to build and run the program.
     * It will look something like this:
       ![screenshot.png](screenshot.png)
 
-### Wish list
+## Wish list
 
 General clean ups, TODOs and things I wish to implement for this project:
 

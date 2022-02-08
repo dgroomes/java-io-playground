@@ -19,3 +19,9 @@ Follow these instructions to build and run the program:
 5. Copy a file and make some substitution
    * `./gradlew run --args substitutions`
    * This mode will copy the `README.md` file to a temp file and make some string substitutions.
+
+## Wish list
+
+General clean ups, TODOs and things I wish to implement for this project:
+
+* Use compression (like gzip) 

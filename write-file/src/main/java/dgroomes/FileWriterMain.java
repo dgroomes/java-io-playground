@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
- * See the README.md for more information.
+ * Write to files. See the README.md for more information.
  */
 public class FileWriterMain {
 
@@ -106,7 +106,7 @@ public class FileWriterMain {
      *
      * @param openOption the given OpenOption will be used for the OutputStream.
      */
-    private static void writeToFile(OpenOption openOption) throws IOException {
+    private static void writeToFileAFewTimes(OpenOption openOption) throws IOException {
         var file = new File(tempDir, TEMP_FILE);
         createFileFresh(file);
         var filePath = file.toPath();
@@ -115,6 +115,9 @@ public class FileWriterMain {
         // Write the content
         var messages = List.of("Hello,\n", "world", "!\n");
         for (String message : messages) {
+            // Normally, when writing data in a loop you would want to open the file just once for efficiency. But this
+            // method needs to illustrate how the OpenOptions behave differently over a series of independent write
+            // operations. So, purposely use a method like "Files.writeToString" here.
             Files.writeString(filePath, message, openOption);
         }
 
@@ -128,7 +131,7 @@ public class FileWriterMain {
      */
     private static WriteOption writeToFileAppend() throws IOException {
         log.info("Will write to a file using the 'APPEND' OpenOption. The content from all write operations will be in the file");
-        writeToFile(StandardOpenOption.APPEND);
+        writeToFileAFewTimes(StandardOpenOption.APPEND);
         return WriteOption.APPEND;
     }
 
@@ -140,7 +143,7 @@ public class FileWriterMain {
      */
     private static WriteOption writeToFileTruncate() throws IOException {
         log.info("Will write to a file using the 'TRUNCATE_EXISTING' OpenOption. Only the content of the last write operation will be in the file");
-        writeToFile(StandardOpenOption.TRUNCATE_EXISTING);
+        writeToFileAFewTimes(StandardOpenOption.TRUNCATE_EXISTING);
         return WriteOption.TRUNCATE;
     }
 

@@ -6,8 +6,9 @@ package dgroomes;
 public enum CompressionType {
     NONE(""),
     GZIP(".gz"),
-    ZLIB(".zz");
-    // TODO support brotli (?), and probably ZSTD
+    ZLIB(".zz"),
+    ZSTD(".zst"),
+    ZSTD_STRONGEST(".zst");
 
     public final String fileExtension;
 

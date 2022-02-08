@@ -38,3 +38,4 @@ General clean ups, TODOs and things I wish to implement for this project:
 ## Reference
 
 * [JavaDoc: java.util.zip.Deflater](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/zip/Deflater.html)
+* [JNI binding for Zstd](https://github.com/luben/zstd-jni/)

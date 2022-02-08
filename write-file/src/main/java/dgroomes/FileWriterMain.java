@@ -1,5 +1,7 @@
 package dgroomes;
 
+import com.github.luben.zstd.Zstd;
+import com.github.luben.zstd.ZstdOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +51,8 @@ public class FileWriterMain {
             case COMPRESS_NONE -> writeToFileWithCompression(CompressionType.NONE);
             case COMPRESS_GZIP -> writeToFileWithCompression(CompressionType.GZIP);
             case COMPRESS_ZLIB -> writeToFileWithCompression(CompressionType.ZLIB);
+            case COMPRESS_ZSTD -> writeToFileWithCompression(CompressionType.ZSTD);
+            case COMPRESS_ZSTD_STRONGEST -> writeToFileWithCompression(CompressionType.ZSTD_STRONGEST);
         };
     }
 
@@ -181,6 +185,8 @@ public class FileWriterMain {
                 Deflater deflater = new Deflater(9, false);
                 yield new DeflaterOutputStream(fileOutputStream, deflater);
             }
+            case ZSTD -> new ZstdOutputStream(fileOutputStream, Zstd.minCompressionLevel());
+            case ZSTD_STRONGEST -> new ZstdOutputStream(fileOutputStream, Zstd.maxCompressionLevel());
         }) {
 
             var start = Instant.now();

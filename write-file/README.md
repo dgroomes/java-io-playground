@@ -21,9 +21,20 @@ Follow these instructions to build and run the program:
    * This mode will copy the `README.md` file to a temp file and make some string substitutions.
 6. Compress data and write it to a file:
    * `./gradlew run --args compress_gzip`
+   * Peek at the file contents with the following command.
+   * `gzip -cd tmp/file.txt.gz | head`
+7. Use a different compression algorithm:
+   * `./gradlew run --args compress_zlib`
+   * Peek at the file contents with the following command.
+   * `perl -MCompress::Zlib -e 'undef $/; print uncompress(<>)' < tmp/file.txt.zz | head`
 
 ## Wish list
 
 General clean ups, TODOs and things I wish to implement for this project:
 
-* DONE Use compression (like gzip) 
+* DONE Use compression (like gzip)
+* DONE Use another compression type. Does anything offer parallelization?
+
+## Reference
+
+* [JavaDoc: java.util.zip.Deflater](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/zip/Deflater.html)

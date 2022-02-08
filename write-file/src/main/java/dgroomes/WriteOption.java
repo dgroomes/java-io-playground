@@ -10,5 +10,6 @@ public enum WriteOption {
     APPEND,
     SUBSTITUTIONS,
     COMPRESS_GZIP,
+    COMPRESS_ZLIB,
     COMPRESS_NONE
 }

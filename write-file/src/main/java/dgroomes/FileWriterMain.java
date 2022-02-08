@@ -11,6 +11,8 @@ import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -46,6 +48,7 @@ public class FileWriterMain {
             case SUBSTITUTIONS -> copyFileWithSubstitutions();
             case COMPRESS_NONE -> writeToFileWithCompression(CompressionType.NONE);
             case COMPRESS_GZIP -> writeToFileWithCompression(CompressionType.GZIP);
+            case COMPRESS_ZLIB -> writeToFileWithCompression(CompressionType.ZLIB);
         };
     }
 
@@ -174,6 +177,10 @@ public class FileWriterMain {
         try (var outputStream = switch (compressionType) {
             case NONE -> fileOutputStream;
             case GZIP -> new GZIPOutputStream(fileOutputStream);
+            case ZLIB -> {
+                Deflater deflater = new Deflater(9, false);
+                yield new DeflaterOutputStream(fileOutputStream, deflater);
+            }
         }) {
 
             var start = Instant.now();

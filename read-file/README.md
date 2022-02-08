@@ -2,16 +2,15 @@
 
 A simple program that illustrates a few different ways to read from a file using the Java standard libraries.
 
-## Pre-requisites
-
-* Java 16 must be installed
-  * The program depends on this version. It is specified in the `build.gradle.kts` file using the `java` configuration
-    block which implements Gradle's [Toolchains for JVM projects feature](https://docs.gradle.org/current/userguide/toolchains.html). 
-
 ## Instructions
 
-1. Use Java 8 or higher (Gradle depends on this version of Java or higher)
-1. Execute `./gradlew run --args "README.md buffered"` to run the program. It will read the `README.md` file.
-    1. Suggestion: instead of `README.md`, try a larger file. You can use the `write-file` sub-project to generate a
-       large file.
-    1. Try different read techniques besides `buffered`. See the enum `ReadTechnique.java` for more information.
+Follow these instructions to build and run the program.
+
+1. Use Java 17
+2. Build and run the program:
+   * `./gradlew run --args "README.md buffered"`
+   * It will read the `README.md` file.
+3. Next, try to read a different file
+   * Instead of `README.md`, try a larger file. You can use the `write-file` sub-project to generate a large file.
+4. Next, try a different read technique
+   * There are other options besides `buffered`. See the enum `ReadTechnique.java` for more information.

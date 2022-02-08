@@ -52,7 +52,7 @@ A simple client and server program using sockets.
 
 See the README in [sockets/](sockets/).
 
-## Referenced material
+## Reference
 
 * The [official Java language tutorials](https://docs.oracle.com/javase/tutorial/essential/io/file.html)
 * [`gradle-playground` GitHub repo](https://github.com/dgroomes/gradle-playground)

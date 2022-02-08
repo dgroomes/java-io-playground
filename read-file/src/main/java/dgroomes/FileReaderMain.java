@@ -6,6 +6,7 @@ import org.slf4j.impl.SimpleLogger;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.NumberFormat;
 
 /**
@@ -51,7 +52,7 @@ public class FileReaderMain {
             throw new IllegalArgumentException("The path argument was blank!");
         }
 
-        File file = new File(path);
+        File file = Path.of(path).toAbsolutePath().normalize().toFile();
         if (!file.exists()) {
             throw new IllegalStateException("The specified file does not exist! File: %s".formatted(file.getAbsolutePath()));
         }

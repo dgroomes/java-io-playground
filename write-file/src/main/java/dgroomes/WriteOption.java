@@ -8,5 +8,7 @@ public enum WriteOption {
     LARGE,
     TRUNCATE,
     APPEND,
-    SUBSTITUTIONS
+    SUBSTITUTIONS,
+    COMPRESS_GZIP,
+    COMPRESS_NONE
 }

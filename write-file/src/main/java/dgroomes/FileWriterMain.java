@@ -7,7 +7,11 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.StandardOpenOption;
+import java.text.NumberFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Write to files. See the README.md for more information.
@@ -18,7 +22,8 @@ public class FileWriterMain {
     private static final String TEMP_LARGE_FILE = "large-file.txt";
     private static final String TEMP_FILE = "file.txt";
     private static final String TEMP_DIR = "tmp";
-    private static final int NUMBER_OF_LINES = 100_000_000;
+    private static final int LARGE_FILE_NUMBER_OF_LINES = 100_000_000;
+    private static final int COMPRESSED_DATA_FILE_NUMBER_OF_LINES = 1_000_000;
     private static File tempDir;
 
     public static void main(String[] args) throws IOException {
@@ -39,6 +44,8 @@ public class FileWriterMain {
             case APPEND -> writeToFileAppend();
             case TRUNCATE -> writeToFileTruncate();
             case SUBSTITUTIONS -> copyFileWithSubstitutions();
+            case COMPRESS_NONE -> writeToFileWithCompression(CompressionType.NONE);
+            case COMPRESS_GZIP -> writeToFileWithCompression(CompressionType.GZIP);
         };
     }
 
@@ -88,7 +95,7 @@ public class FileWriterMain {
         log.info("Generating a large file to {}", filePath);
 
         try (var writer = new PrintWriter(file)) {
-            for (int i = 0; i < NUMBER_OF_LINES; i++) {
+            for (int i = 0; i < LARGE_FILE_NUMBER_OF_LINES; i++) {
                 var lineNumber = i + 1;
                 writer.println("%09d: this is a line of dummy data".formatted(lineNumber));
             }
@@ -110,7 +117,6 @@ public class FileWriterMain {
         var file = new File(tempDir, TEMP_FILE);
         createFileFresh(file);
         var filePath = file.toPath();
-
 
         // Write the content
         var messages = List.of("Hello,\n", "world", "!\n");
@@ -145,6 +151,49 @@ public class FileWriterMain {
         log.info("Will write to a file using the 'TRUNCATE_EXISTING' OpenOption. Only the content of the last write operation will be in the file");
         writeToFileAFewTimes(StandardOpenOption.TRUNCATE_EXISTING);
         return WriteOption.TRUNCATE;
+    }
+
+    /**
+     * Compress and write data to a file.
+     *
+     * Interestingly, it's faster to GZIP the data and write it to a file (~ 2 seconds) than it is to do no compression
+     * at all (~3.5 seconds). This because the bottleneck is IO not the CPU! This is often an unintuitive reality with
+     * a lot of workloads.
+     */
+    private static WriteOption writeToFileWithCompression(CompressionType compressionType) throws IOException {
+        var file = new File(tempDir, TEMP_FILE);
+        createFileFresh(file);
+        var filePath = file.getAbsolutePath();
+        log.info("Compressing lots of content and writing it to a file: '{}'. Using compression type {}", filePath, compressionType);
+
+        Duration duration;
+
+        // Set up the right OutputStream (a normal file; or GZIP compressed; or ... ?). "Coding to interfaces" rocks".
+        // Then, write lots of content to the file.
+        var fileOutputStream = new FileOutputStream(file);
+        try (var outputStream = switch (compressionType) {
+            case NONE -> fileOutputStream;
+            case GZIP -> new GZIPOutputStream(fileOutputStream);
+        }) {
+
+            var start = Instant.now();
+            for (int i = 0; i < COMPRESSED_DATA_FILE_NUMBER_OF_LINES; i++) {
+                var lineNumber = i + 1;
+                var message = "%09d: this is a line of dummy data".formatted(lineNumber);
+                byte[] bytes = message.getBytes();
+                outputStream.write(bytes);
+            }
+            var end = Instant.now();
+            duration = Duration.between(start, end);
+        }
+
+        String fileSizeBytesPretty = NumberFormat.getInstance().format(file.length());
+        log.info("""
+            Done compressing data and writing it to the file.
+                The file's final size in bytes: {}
+                Duration: {}""", fileSizeBytesPretty, duration);
+
+        return WriteOption.COMPRESS_GZIP;
     }
 
     /**

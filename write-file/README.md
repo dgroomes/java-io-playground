@@ -19,9 +19,11 @@ Follow these instructions to build and run the program:
 5. Copy a file and make some substitution
    * `./gradlew run --args substitutions`
    * This mode will copy the `README.md` file to a temp file and make some string substitutions.
+6. Compress data and write it to a file:
+   * `./gradlew run --args compress_gzip`
 
 ## Wish list
 
 General clean ups, TODOs and things I wish to implement for this project:
 
-* Use compression (like gzip) 
+* DONE Use compression (like gzip) 

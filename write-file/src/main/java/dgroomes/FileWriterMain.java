@@ -161,7 +161,7 @@ public class FileWriterMain {
      * a lot of workloads.
      */
     private static WriteOption writeToFileWithCompression(CompressionType compressionType) throws IOException {
-        var file = new File(tempDir, TEMP_FILE);
+        var file = new File(tempDir, TEMP_FILE + compressionType.fileExtension);
         createFileFresh(file);
         var filePath = file.getAbsolutePath();
         log.info("Compressing lots of content and writing it to a file: '{}'. Using compression type {}", filePath, compressionType);
@@ -179,7 +179,7 @@ public class FileWriterMain {
             var start = Instant.now();
             for (int i = 0; i < COMPRESSED_DATA_FILE_NUMBER_OF_LINES; i++) {
                 var lineNumber = i + 1;
-                var message = "%09d: this is a line of dummy data".formatted(lineNumber);
+                var message = "%09d: this is a line of dummy data%n".formatted(lineNumber);
                 byte[] bytes = message.getBytes();
                 outputStream.write(bytes);
             }

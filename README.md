@@ -2,14 +2,10 @@
 
 📚 Learning and exploring Java's IO (input/output) standard libraries.
 
----
-**NOTE**:
-
-This was developed on macOS and for my own personal use.
-
----
 
 ## Learning about Java IO
+
+**NOTE**: This project was developed on macOS. It is for my own personal use.
 
 My goal is to learn more about Java IO. Specifically:
 
@@ -18,6 +14,7 @@ My goal is to learn more about Java IO. Specifically:
   * In particular, I want to learn about Java's "new IO" in the `java.nio` which apparently has been controversial from
     its inception. I'd like to form my own opinions about that by actually trying it out. Again, this is not new stuff!
 * I want to learn new stuff (Java 11+)
+
 
 ## Standalone sub-projects
 
@@ -51,6 +48,7 @@ See the README in [temp-files/](temp-files/).
 A simple client and server program using sockets.
 
 See the README in [sockets/](sockets/).
+
 
 ## Reference
 
